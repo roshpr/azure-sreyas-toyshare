@@ -18,6 +18,36 @@ variable "existing_nsg_name" {
   type        = string
 }
 
+variable "vm_size" {
+  description = "Azure VM size for toyshare"
+  type        = string
+  default     = "Standard_B4als_v2"
+}
+
+variable "root_disk_size_gb" {
+  description = "Size of the root OS disk in GB"
+  type        = number
+  default     = 50
+}
+
+variable "data_disk_size_gb" {
+  description = "Size of the data disk in GB"
+  type        = number
+  default     = 50
+}
+
+variable "mount_directory" {
+  description = "Directory where the data disk will be mounted"
+  type        = string
+  default     = "/opt/toyexchange/uploads"
+}
+
+variable "domain_name" {
+  description = "Domain name for the SSL certificate and nginx configuration"
+  type        = string
+  default     = "toy-share.org"
+}
+
 variable "ssh_public_key_path" {
   description = "Path to the SSH public key file"
   type        = string
@@ -27,6 +57,18 @@ variable "ssh_public_key_path" {
 variable "setup_script_url" {
   description = "URL of the setup script to download and execute for nginx and SSL configuration"
   type        = string
+}
+
+variable "restricted_ssh_ips" {
+  description = "IP ranges allowed to access SSH (port 22)"
+  type        = list(string)
+  default     = ["170.85.154.0/24"]
+}
+
+variable "restricted_app_ips" {
+  description = "IP ranges allowed to access Node.js directly (port 3000)"
+  type        = list(string)
+  default     = ["170.85.154.0/24", "172.126.69.0/24"]
 }
 
 variable "tags" {

@@ -7,12 +7,23 @@ existing_nsg_name              = "nsg-sreyas-projects-public"
 # SSH configuration
 ssh_public_key_path = "/Users/roshpr/.ssh/sreyas_azure.pub"
 
+# VM configuration
+vm_size           = "Standard_B2ms"
+root_disk_size_gb = 50
+data_disk_size_gb = 50
+mount_directory   = "/opt/toyexchange/uploads"
+domain_name       = "toy-share.org"
+
+# Security configuration
+restricted_ssh_ips = ["170.85.154.0/24"]
+restricted_app_ips = ["170.85.154.0/24", "172.126.69.0/24"]
+
 # Setup script URL - You need to host this script somewhere accessible
 # Examples:
 # - GitHub Gist raw URL
 # - Azure Blob Storage with public access
 # - Any public web server
-setup_script_url = "https://gist.githubusercontent.com/roshpr/7f50f7f00e1d4e9785bb8f9788e6f08e/raw/cac23a69bd5ab2fc6711fcc9fc52786819d999fd/sreyas_toyshare_gist.sh"
+setup_script_url = "https://raw.githubusercontent.com/roshpr/azure-sreyas-toyshare/refs/heads/main/setup-toyshare-nginx.sh"
 
 # Tags
 tags = {
