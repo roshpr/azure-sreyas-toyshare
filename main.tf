@@ -36,6 +36,21 @@ data "azurerm_network_security_group" "public" {
   resource_group_name = data.azurerm_resource_group.existing.name
 }
 
+# Add port 3000 rule to existing subnet NSG
+resource "azurerm_network_security_rule" "nodejs_public_subnet" {
+  name                        = "NodeJS-Public"
+  priority                    = 1004
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3000"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = data.azurerm_resource_group.existing.name
+  network_security_group_name = data.azurerm_network_security_group.public.name
+}
+
 # Public IP for toyshare VM
 resource "azurerm_public_ip" "toyshare_vm_pip" {
   name                = "pip-toyshare-vm"
@@ -113,7 +128,8 @@ resource "azurerm_network_security_group" "toyshare_nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "3000"
-    source_address_prefixes    = var.restricted_app_ips
+    source_address_prefix      = "*"
+    //source_address_prefixes    = var.restricted_app_ips
     destination_address_prefix = "*"
   }
 
